@@ -54,7 +54,18 @@ public class IndexResponse {
     }
 
     private static APIGatewayV2HTTPResponse constructFromLayer(String path, Layer layer) {
-        String fullPath = path + '/';
+        String relativePrefix;
+        if (path == null || path.equals("")) {
+            relativePrefix = "";
+        } else {
+            if (path.lastIndexOf('/') == -1) {
+                relativePrefix = path + '/';
+            } else {
+                int prev = path.lastIndexOf('/');
+                relativePrefix = '.' + path.substring(prev) + '/';
+            }
+        }
+
 
         StringBuilder output = new StringBuilder();
 
@@ -63,7 +74,7 @@ public class IndexResponse {
         output.append("	<head>\n");
         output.append("		<title>").append(Config.MAVEN_NAME).append("</title>\n");
         output.append("		<meta property=\"og:title\" content=\"").append(Config.MAVEN_NAME).append("\">\n");
-        output.append("		<meta property=\"og:description\" content=\"An index of ").append(fullPath).append(" on the maven\">\n");
+        output.append("		<meta property=\"og:description\" content=\"An index of ").append(path).append("/ on the maven\">\n");
         if (Config.MAVEN_IMAGE != null) {
             output.append("		<meta property=\"og:image\" content=\"").append(Config.MAVEN_IMAGE).append("\">\n");
         }
@@ -75,13 +86,18 @@ public class IndexResponse {
         }
         output.append("	</head>\n");
         output.append("	<body>\n");
-        output.append("		<h1>Index of ").append(fullPath).append("</h1>\n");
+        output.append("		<h1>Index of ").append(path).append("/</h1>\n");
 
         if (!layer.packages.isEmpty()) {
             output.append("		<h3>Packages:</h3>\n");
             output.append("		<ul>\n");
             for (String pkg : layer.packages) {
-                output.append("			<li><a href=\"./").append(pkg).append("\">").append(pkg).append("/</a></li>\n");
+                output.append("			<li><a href=\"")
+                        .append(relativePrefix)
+                        .append(pkg)
+                        .append("\">")
+                        .append(pkg)
+                        .append("/</a></li>\n");
             }
             output.append("		</ul>\n");
         }
@@ -90,7 +106,7 @@ public class IndexResponse {
             output.append("		<h3>Files:</h3>\n");
             output.append("		<ul>\n");
             for (String file : layer.files) {
-                output.append("			<li><a href=\"./").append(file).append("\" download>").append(file).append("</a></li>\n");
+                output.append("			<li><a href=\"").append(relativePrefix).append(file).append("\" download>").append(file).append("</a></li>\n");
             }
             output.append("		</ul>\n");
         }
