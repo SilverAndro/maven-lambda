@@ -8,7 +8,7 @@
 6) update permissions for the lambda to write and read s3
 7) optional: enable and use snapstart https://docs.aws.amazon.com/lambda/latest/dg/snapstart-activate.html
 8) create an api gateway
-9) create $default route for the gateway and attach the integration (and remove the default integration)
+9) create `$default` route for the gateway and attach the integration (and remove the default integration)
 10) use https://kylebarron.dev/blog/caching-lambda-functions-cloudflare to connect through cloudflare
 
 ## Config:
