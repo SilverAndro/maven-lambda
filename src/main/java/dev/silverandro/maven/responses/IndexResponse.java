@@ -5,6 +5,7 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayV2HTTPResponse;
 import com.amazonaws.services.s3.model.ListObjectsV2Request;
 import com.amazonaws.services.s3.model.ListObjectsV2Result;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
+import com.unascribed.flexver.FlexVerComparator;
 import dev.silverandro.maven.Config;
 import dev.silverandro.maven.Handler;
 import dev.silverandro.maven.layer.Layer;
@@ -13,6 +14,7 @@ import org.apache.commons.logging.LogFactory;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class IndexResponse {
     private static final Log log = LogFactory.getLog(IndexResponse.class);
@@ -91,7 +93,9 @@ public class IndexResponse {
         if (!layer.packages.isEmpty()) {
             output.append("		<h3>Packages:</h3>\n");
             output.append("		<ul>\n");
-            for (String pkg : layer.packages) {
+
+            List<String> packages = layer.packages.stream().sorted(FlexVerComparator::compare).toList();
+            for (String pkg : packages) {
                 output.append("			<li><a href=\"")
                         .append(relativePrefix)
                         .append(pkg)
@@ -105,7 +109,9 @@ public class IndexResponse {
         if (!layer.files.isEmpty()) {
             output.append("		<h3>Files:</h3>\n");
             output.append("		<ul>\n");
-            for (String file : layer.files) {
+
+            List<String> files = layer.files.stream().sorted(FlexVerComparator::compare).toList();
+            for (String file : files) {
                 output.append("			<li><a href=\"").append(relativePrefix).append(file).append("\" download>").append(file).append("</a></li>\n");
             }
             output.append("		</ul>\n");
