@@ -2,7 +2,7 @@
 
 1) create a new lambda with java runtime
 2) upload the jar
-3) edit the entry point to use "dev.silverandro.maven.Handler::handleRequest" as the handler
+3) edit the entry point to use `dev.silverandro.maven.Handler::handleRequest` as the handler
 4) create an s3 bucket
 5) configure env variables
 6) update permissions for the lambda to write and read s3
