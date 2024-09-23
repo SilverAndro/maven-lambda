@@ -1,15 +1,16 @@
 # Setup
 
-1) create a new lambda with java runtime
-2) upload the jar
-3) edit the entry point to use `dev.silverandro.maven.Handler::handleRequest` as the handler
-4) create an s3 bucket
-5) configure env variables
-6) update permissions for the lambda to write and read s3
-7) optional: enable and use snapstart https://docs.aws.amazon.com/lambda/latest/dg/snapstart-activate.html
-8) create an api gateway
-9) create `$default` route for the gateway and attach the integration (and remove the default integration)
-10) use https://kylebarron.dev/blog/caching-lambda-functions-cloudflare to connect through cloudflare
+1) build the project with `shadowJar`
+2) create a new lambda with java runtime
+3) upload the jar
+4) edit the entry point to use `dev.silverandro.maven.Handler::handleRequest` as the handler
+5) create an s3 bucket
+6) configure env variables
+7) update permissions for the lambda to write and read s3
+8) optional: enable and use snapstart https://docs.aws.amazon.com/lambda/latest/dg/snapstart-activate.html
+9) create an api gateway
+10) create `$default` route for the gateway and attach the integration (and remove the default integration)
+11) use https://kylebarron.dev/blog/caching-lambda-functions-cloudflare to connect through cloudflare
 
 ## Config:
 
