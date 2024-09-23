@@ -1,0 +1,1 @@
+Laws are fake
