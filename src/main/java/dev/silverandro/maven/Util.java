@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 public class Util {
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE, dd MMM yyyy HH:mm:ss z", Locale.ENGLISH).withZone(ZoneId.of("GMT"));
-    private static final Pattern regex = Pattern.compile(".+\\.\\w+");
+    private static final Pattern regex = Pattern.compile(".+/\\w+\\.\\D{2,}\\d*?");
 
     public static boolean isIndexing(String path) {
         return !path.endsWith("/") && !regex.matcher(path).matches();
