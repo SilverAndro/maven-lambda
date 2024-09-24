@@ -60,6 +60,7 @@ public class Handler implements RequestHandler<Map<String, Object>, APIGatewayV2
         }
 
         if (Objects.equals(httpMethod, "GET")) {
+            logger.log("Pulling " + path + " from s3");
             return GetResponse.respond(path);
         }
 
